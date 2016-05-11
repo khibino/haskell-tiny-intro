@@ -168,6 +168,10 @@ bar2 b = bar b + 2
 -- パターンマッチ(パターン照合)
 -- pattern match
 
+bar3 :: Bool -> Int
+bar3 True   =  1
+bar3 False  =  0
+
 baz :: a -> Maybe a -> a  -- 型変数入りの型シグネチャ  -- type signature using type variable
 baz d m = case m of
   Just x   -> x
@@ -247,3 +251,17 @@ plus = (+)
 -- :t map $ \x -> plus x 1   -- 2項演算子 $ は括弧の代わりに使えることが多い
                              -- binary operator `$' is useful instead of parens
 -- :t ($)
+
+
+-- ガード
+-- Guard
+
+bar4 :: Bool -> Int
+bar4 b
+  | b          =  1
+  | otherwise  =  0
+
+factorial2 :: Integer -> Integer
+factorial2 n
+  | n <= 0    =  1
+  | otherwise =  n * factorial2 (n - 1)

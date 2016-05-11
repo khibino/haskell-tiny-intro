@@ -151,6 +151,8 @@ data [a]
   | a : [a]
  -}
 
+-- :i :
+-- :t 'a' : "bc"
 
 
 -- 値、関数 の定義
@@ -212,9 +214,36 @@ type String = [Char]
  -}
 
 
+-- 2項演算子
+-- infix binary operators
+
+-- 関数としての演算子
+-- operator as function
+
+plus :: Int -> Int -> Int
+plus = (+)
+
+
 -- セクション  -- 演算子の部分適用
 -- section     -- partial application of operator function
 
+-- :t ('x' :)            -- 2項演算子の左辺に適用  -- apply left argument of infix binary operator
+-- ('x' :) "abc"
+-- :t (: "abc")          -- 2項演算子の右辺に適用  -- apply right argument of infix binary operator
+-- (: "abc") 'x'
+-- :t (== "Hello")
+-- :t (`plus` 1)         -- ` ` でくくると関数を 2項演算子として利用できる
+                         -- backquoted function is available as infix binary operator
 -- :t (+ (1 :: Int))
 -- :t (+ 1)
--- :t (== "Hello")
+
+
+-- ラムダ式
+-- lambda formula
+
+-- :t \s -> 'x' : s
+-- :t \x y -> Just (x, y)
+-- :t map (\x -> plus x 1)
+-- :t map $ \x -> plus x 1   -- 2項演算子 $ は括弧の代わりに使えることが多い
+                             -- binary operator `$' is useful instead of parens
+-- :t ($)

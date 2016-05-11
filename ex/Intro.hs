@@ -113,8 +113,13 @@ exampleX0 = X 'z' 10
 exampleY0 :: S
 exampleY0 = Y "wai"
 
--- 複数の値のいづれかを持つ型を直和型という。 たとえば C では判別共用体で実現する
--- data type which representation is one of multiple value, called sum(direct sum) type.
+-- 複数の値のいずれかを持つ型を直和型という。 C ではたとえば判別共用体で実現する
+-- data type which representation is one of multiple value, called sum(disjoint union) type.
+-- Implementing this as tagged union in C.
+
+-- 複数の可能性があるが、必ずどれかになる型という有用な概念。静的型付けの関数型言語以外ではあまり無い機能。
+-- It is useful idea that sum type may be a number of possibility, and must be one in them.
+-- It is rare feature other than statically typed functional programming language.
 
 {-
 -- あらかじめ定義済みの型の例

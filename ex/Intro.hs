@@ -198,15 +198,6 @@ sumInt xxs = case xxs of
 -- sumInt [1 .. 10]
 
 
-
--- セクション  -- 演算子の部分適用
--- section     -- partial application of operator function
-
--- :t (+ (1 :: Int))
--- :t (+ 1)
--- :t (== "Hello")
-
-
 -- 型エイリアスの定義
 -- type alias definition
 
@@ -219,3 +210,11 @@ type MaybeI = Maybe Int
 {-
 type String = [Char]
  -}
+
+
+-- セクション  -- 演算子の部分適用
+-- section     -- partial application of operator function
+
+-- :t (+ (1 :: Int))
+-- :t (+ 1)
+-- :t (== "Hello")

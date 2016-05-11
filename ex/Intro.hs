@@ -183,7 +183,8 @@ baz d m = case m of
   Nothing  -> d
 
 baz2 :: a -> Maybe a -> a
-baz2 _ (Just x)  =  x
+baz2 _ (Just x)  =  x     -- 使用しない引数を受けるのに (_) ワイルドカードパターンを使っている
+                          -- using (_) wild-card pattern against not using arity
 baz2 d Nothing   =  d
 
 -- baz2 "Hello" Nothing

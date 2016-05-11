@@ -270,3 +270,9 @@ factorial2 :: Integer -> Integer
 factorial2 n
   | n <= 0    =  1
   | otherwise =  n * factorial2 (n - 1)
+
+factorial3 :: Integer -> Integer
+factorial3 0  =   1
+factorial3 n
+  | n <  0    =  1
+  | otherwise =  n * factorial3 (n - 1)

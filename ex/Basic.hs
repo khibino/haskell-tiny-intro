@@ -1,4 +1,6 @@
-module Intro where
+module Basic where
+
+import Data.Char (digitToInt)
 
 -- Haskell
 -- 純粋関数プログラミング言語
@@ -210,6 +212,16 @@ sumInt xxs = case xxs of
 -- sumInt [1 .. 10]
 
 
+-- フィボナッチ数列の n 項目を返す関数を書いてください
+-- Write a function which result is nth result of Fibonacci number
+
+-- hint
+fib :: Integer -> Integer
+fib 0 = 0
+fib 1 = undefined
+fib n = undefined
+
+
 -- 型エイリアスの定義
 -- type alias definition
 
@@ -273,7 +285,58 @@ factorial2 n
   | otherwise =  n * factorial2 (n - 1)
 
 factorial3 :: Integer -> Integer
-factorial3 0  =   1
-factorial3 n
-  | n <  0    =  1
-  | otherwise =  n * factorial3 (n - 1)
+factorial3 n =  case n of
+  0              ->  1
+  k | k <  0     ->  1
+    | otherwise  ->  k * factorial3 (k - 1)
+
+
+-- リストの先頭から最大 n 個を取り出す関数を書いてください
+-- Write a function which takes most n elements from list head.
+take' :: Int -> [a] -> [a]
+take' = undefined
+
+-- take' 2 []          ===  []
+-- take' 0 [1,2,3]     ===  []
+-- take' 2 [1,2,3]     ===  [1,2]
+-- take' (-1) [1,2]    ===  []
+-- take' 3 [1,2,3,4]   ===  [1,2,3]
+
+
+-- 局所定義
+-- local scope definition
+
+
+factorial4 :: Integer -> Integer
+factorial4 = go 1
+  where
+    go :: Integer -> Integer -> Integer  -- 局所定義では省略してもよい
+                                         -- type signature is optional in local scope
+    go a n
+      | n <= 0     =  a
+      | otherwise  =  go (n * a) (n - 1)  --  tail recursion
+--                       ^
+--                       蓄積引数
+--                       accumulator arity
+
+
+-- :t digitToInt
+-- map digitToInt ['0' .. '9']
+-- map digitToInt ['a' .. 'f']
+
+-- 16進数文字列を数値に直す関数を書いてください
+-- Write a function which convert hexadecimal string into integer
+readHex' :: String -> Int
+readHex' = undefined
+
+
+-- 畳み込み
+-- folding
+
+factorial5 :: Integer -> Integer
+factorial5 n = foldl (*) 1 [n, n - 1 .. 1]
+
+-- 畳み込みを使った readHex' を書いてください
+-- Write folding version of readHex'
+readHex :: String -> Int
+readHex = undefined

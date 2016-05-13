@@ -13,8 +13,8 @@ data Expr
   | Mult Expr Expr
   deriving (Eq, Show)
 
--- Expr型の結果を持つ parser を実装する
--- implement following syntax parser which result is Expr type.
+-- 以下の文法の Expr型の結果を持つ parser を実装してください
+-- Implement following syntax parser which result is Expr type.
 -- 演算子は右結合でよい
 -- right associative operator implementation may be more simple.
 

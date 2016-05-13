@@ -26,7 +26,7 @@ instance Monad Parser where
   (>>=)  = combine
 
 
--- combine の代わりに (>>=) を使った pair を定義する
+-- combine の代わりに (>>=) を使った pair を定義してください
 -- define `pair' using (>>=) instead of combine
 pairM' :: Parser a -> Parser b -> Parser (a, b)
 pairM' pa pb = undefined
@@ -102,7 +102,7 @@ instance MonadPlus Parser where
 -- runParser (guard False) ""
 
 
--- Monad あるいは Applicative を利用して以下を実装してみましょう
+-- Monad あるいは Applicative を利用して以下を実装してください
 -- Implement followings using Monad and Applicative
 
 -- satisfy 再び
@@ -112,16 +112,19 @@ satisfy p = undefined
 
 -- 与えられた文字を入力したら成功し、その文字を返す
 -- specified character input succeed parsing and that character is result.
+-- hint. satisfy
 char :: Char -> Parser Char
 char c = undefined
 
 -- 16進数の文字かどうかを判定する
 -- hexadecimal character parser
+-- hint. satisfy
 hex :: Parser Char
 hex = undefined
 
 -- parser a が失敗するまで繰り返し実行し、[a] を parser の結果とする
 -- repeat until run `parser a'. parser result is list
+-- hint. -- 次の repeat1 との関係は? -- may be related to next problem repeat1
 repeat0 :: Parser a -> Parser [a]
 repeat0 pa = undefined
 

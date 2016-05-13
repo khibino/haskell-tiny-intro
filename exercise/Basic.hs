@@ -51,7 +51,7 @@ exampleP0 = P0 0 "Hello"
 -- :t P0 1 "World!"
 
 
--- 複数の値を同時に持つ型を直積型(デカルト積型)という。C でいう構造体のような型
+-- 複数の値を同時に持つ型を直積(デカルト積)型という。C でいう構造体のような型
 -- data type which has multiple value, called direct product(cartesian product) type.
 -- like structure type in C.
 

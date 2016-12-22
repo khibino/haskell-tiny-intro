@@ -10,6 +10,7 @@ import Data.Char (digitToInt)
 -- 簡単な定義の例
 -- simple definition examples
 
+-- Int -> (Int -> (Int -> Int))
 foo :: Int -> Int -> Int -> Int     -- 型シグネチャ  -- type signature
 foo x y z = x + y + z               -- 定義          -- definition body
 
@@ -60,6 +61,9 @@ data P1  =
   { rid  :: Int
   , name :: String
   } deriving Show
+
+exampleP1 :: P1
+exampleP1 = P1 1 "World"
 
 -- :t P1
 -- :t rid
@@ -148,7 +152,9 @@ data Maybe a
 {-
 data [] a
   = []
+--  ^ data constructor
   | (:) a ([] a)
+--  ^ data constructor
 
 -- [] a === [a]
 -- (:) x y === x : y
@@ -183,6 +189,26 @@ baz :: a -> Maybe a -> a  -- 型変数入りの型シグネチャ  -- type signa
 baz d m = case m of
   Just x   -> x
   Nothing  -> d
+
+baz4 :: Int -> Maybe Int -> Int
+baz4 d m = case m of
+  Just x   ->  x + 1
+  Nothing  ->  d
+
+baz4' :: Int -> Maybe Int -> Int
+baz4' d m =
+  if isJust m           --  m != null
+  then fromJust m + 1   --  m + 1
+  else d
+
+wrongBaz4 :: Int -> Maybe Int -> Int
+wrongBaz4 d m =
+  if isJust m           --  m != null
+  then d
+  else fromJust m + 1   --  m + 1  -- error
+       -- not compile error
+       -- else clause is runtime error
+
 
 baz2 :: a -> Maybe a -> a
 baz2 _ (Just x)  =  x     -- 使用しない引数を受けるのに (_) ワイルドカードパターンを使っている
@@ -230,11 +256,12 @@ type MaybeI = Maybe Int
 -- 新しい型名は右辺の型式と同じ型になる
 -- new named type is the same type of right type formula
 
+-- (Just 1 :: Maybe Int) :: MaybeI
+-- (Just 1 :: MaybeI) :: Maybe Int
 
-{-
-type String = [Char]
- -}
+-- type String = [Char]
 
+-- :i String
 
 -- 2項演算子
 -- infix binary operators
@@ -279,6 +306,18 @@ bar4 b
   | b          =  1
   | otherwise  =  0
 
+bar4' :: Bool -> Int
+bar4' b
+  | b          =  1
+  | False      =  2
+  | otherwise  =  0
+
+bar5 :: Int -> Int
+bar5 n
+  | n <= 0            =  0
+  | 1 <= n && n <= 5  =  1
+  | otherwise         =  2
+
 factorial2 :: Integer -> Integer
 factorial2 n
   | n <= 0    =  1
@@ -301,7 +340,6 @@ take' = undefined
 -- take' 2 [1,2,3]     ===  [1,2]
 -- take' (-1) [1,2]    ===  []
 -- take' 3 [1,2,3,4]   ===  [1,2,3]
-
 
 -- 局所定義
 -- local scope definition
@@ -328,7 +366,6 @@ factorial4 = go 1
 -- Write a function which convert hexadecimal string into integer
 readHex' :: String -> Int
 readHex' = undefined
-
 
 -- 畳み込み
 -- folding

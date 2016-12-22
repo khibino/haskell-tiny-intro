@@ -18,8 +18,16 @@ import Parser
 -- Monad
 -- return :: a -> Parser a
 -- return :: Monad m => a -> m a
+--                           m      a
+--                           Parser a
 -- (>>=) :: Parser a -> (a -> Parser b) -> Parser b
 -- (>>=) :: Monad m => m a -> (a -> m b) -> m b
+
+{-
+class Monad m where
+  return :: a -> m a
+  (>>=) :: m a -> (a -> m b) -> m b
+ -}
 
 instance Monad Parser where
   return = success
@@ -29,7 +37,10 @@ instance Monad Parser where
 -- combine の代わりに (>>=) を使った pair を定義してください
 -- define `pair' using (>>=) instead of combine
 pairM' :: Parser a -> Parser b -> Parser (a, b)
-pairM' pa pb = undefined
+pairM' pa pb =
+  pa >>= \a ->
+  pb >>= \b ->
+  return (a, b)
 
 -- Monad にしたことによって、Haskell の do 糖衣構文が使えるようになる
 -- `do' syntax sugar is available by applying Monad
@@ -65,8 +76,26 @@ instance Applicative Parser where
 
 -- (,) :: a -> b -> (a, b)
 --
--- (,) <$> pa :: Parser a -> Parser (b -> (a, b))
+-- (,) <$> pa :: Parser (b -> (a, b))
 -- (,) <$> pa <*> pb :: Parser (a, b)
+
+-- (<$>) :: (a -> b -> (a, b)) -> Parser a -> Parser (b -> (a, b))
+
+-- f :: a -> b -> c
+-- pa :: Parser a, pb :: Parser b
+-- f <$> pa <*> pb :: Parser c
+-- pure f <*> pa <*> pb :: Parser c
+
+-- g :: a -> b -> c -> d
+-- pa :: Parser a, pb :: Parser b, pc :: Parser c
+-- g <$> pa <*> pb <*> pc :: Parser d
+-- pure g <*> pa <*> pb <*> pc :: Parser d
+
+-- g :: a -> b -> c -> d
+-- pure g :: f (a -> b -> c -> d)
+-- pure g <*> pa :: f (b -> c -> d)
+-- g <$> pa == pure g <*> pa
+--
 
 -- Applicative を使った pair の定義
 -- pair definition using Applicative
@@ -95,7 +124,7 @@ instance MonadPlus Parser where
 -- (*>) :: Parser a -> Parser b -> Parser b
 -- (<*) :: Applicative f => f a -> f b -> f a
 -- (<*) :: Parser a -> Parser b -> Parser a
--- guard :: Bool -> m ()
+-- guard :: MonadPlus m => Bool -> m ()
 -- guard :: Bool -> Parser ()
 
 -- runParser (guard True) ""
@@ -108,13 +137,30 @@ instance MonadPlus Parser where
 -- satisfy 再び
 -- satisfy again.
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy p = undefined
+satisfy p =
+  token       >>= \a ->
+  guard (p a) *>
+  return a
+
+{-
+satisfy p =
+  token       >>= \a ->
+  guard (p a) >>= \() ->
+  return a
+ -}
+
+{-
+satisfy p = do
+  a  <- token
+  () <- guard (p a)
+  return a
+ -}
 
 -- 与えられた文字を入力したら成功し、その文字を返す
 -- specified character input succeed parsing and that character is result.
 -- hint. satisfy
 char :: Char -> Parser Char
-char c = undefined
+char c = satisfy (== c)
 
 -- 16進数の文字かどうかを判定する
 -- hexadecimal character parser
@@ -126,7 +172,19 @@ hex = undefined
 -- repeat until run `parser a'. parser result is list
 -- hint. -- 次の repeat1 との関係は? -- may be related to next problem repeat1
 repeat0 :: Parser a -> Parser [a]
-repeat0 pa = undefined
+repeat0 pa = repeat1 pa <|> return []
+{-
+repeat0 pa =
+  (:) <$> pa <*> repeat0 pa <|> return []
+ -}
+
+{-
+repeat0 pa =
+  (do a  <- pa
+      as <- repeat0 pa
+      return (a : as))
+  <|> return []
+ -}
 
 -- runParser (repeat0 hex) ""
 -- runParser (repeat0 hex) "a1"
@@ -134,7 +192,17 @@ repeat0 pa = undefined
 -- repeat0 とは違い、一つ以上の結果を成功とする
 -- one or more length result only succeeds, different from repeat0
 repeat1 :: Parser a -> Parser [a]
-repeat1 pa = undefined
+repeat1 pa = (:) <$> pa <*> repeat0 pa
+
+{-
+repeat1 pa =
+  do a  <- pa
+     as <- repeat1 pa
+     return (a:as)
+  <|>
+  do a  <- pa
+     return [a]
+ -}
 
 -- runParser (repeat1 hex) ""
 -- runParser (repeat1 hex) "a1"

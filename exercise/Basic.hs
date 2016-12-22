@@ -1,6 +1,7 @@
 module Basic where
 
 import Data.Char (digitToInt)
+import Data.Maybe (isJust, fromJust)
 
 -- Haskell
 -- 純粋関数プログラミング言語

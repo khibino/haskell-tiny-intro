@@ -62,12 +62,14 @@ data P1  =
   , name :: String
   } deriving Show
 
-exampleP1 :: P1
-exampleP1 = P1 1 "World"
-
 -- :t P1
 -- :t rid
 -- :t name
+
+exampleP1 :: P1
+exampleP1 = P1 1 "World"
+
+-- :t exampleP1
 
 data P2 a  =  P2 a String    deriving Show
 --      ^

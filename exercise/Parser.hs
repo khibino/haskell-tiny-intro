@@ -74,7 +74,7 @@ eof = undefined
 -- Parser の連接
 -- Parser sequence
 
--- a を結果とする parser と a を使って b を結果とする parser を作る関数を合成して、b を結果とする parser を返す
+-- 「a を結果とする parser」 と 「a を使って b を結果とする parser を作る関数」 を合成して、「b を結果とする parser」 を返す
 -- Parser a : parser's result is `a'
 -- a -> Parser b : function using `a' which result is parser which result is `b'
 -- combine above two and make parser which result is `b'

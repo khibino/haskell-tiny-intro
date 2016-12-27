@@ -97,7 +97,7 @@ satisfy p = undefined
 
 -- '1' `elem` ['0' .. '9']
 -- runParser (satisfy (`elem` ['0' .. '9'])) "a"
--- runParser (satisfy (`elem` ['0' .. '9'])) "3"
+-- runParser (satisfy (`elem` ['0' .. '9'])) "3ab"
 
 
 -- Parser のエラーハンドリング

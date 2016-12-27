@@ -88,6 +88,8 @@ combine pa f = undefined
 pair :: Parser a -> Parser b -> Parser (a, b)
 pair pa pb = undefined
 
+-- runParser (pair token token) "abcd"
+
 -- 一文字入力し、条件判定が真なら成功し入力した文字を結果とする parser
 -- input one char and success if predicate is true, otherwise failure
 satisfy :: (Char -> Bool) -> Parser Char

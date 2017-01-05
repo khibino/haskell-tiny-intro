@@ -65,7 +65,7 @@ instance Applicative Parser where
 
 -- (,) :: a -> b -> (a, b)
 --
--- (,) <$> pa :: Parser a -> Parser (b -> (a, b))
+-- (,) <$> (pa :: Parser a) :: Parser (b -> (a, b))
 -- (,) <$> pa <*> pb :: Parser (a, b)
 
 -- Applicative を使った pair の定義

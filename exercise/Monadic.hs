@@ -105,8 +105,8 @@ instance MonadPlus Parser where
 -- Monad あるいは Applicative を利用して以下を実装してください
 -- Implement followings using Monad and Applicative
 
--- satisfy 再び
--- satisfy again.
+-- satisfy 再び。 guard を使って実装してみましょう。
+-- satisfy again. Please use guard function.
 satisfy :: (Char -> Bool) -> Parser Char
 satisfy p = undefined
 

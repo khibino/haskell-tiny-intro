@@ -95,7 +95,7 @@ instance MonadPlus Parser where
 -- (*>) :: Parser a -> Parser b -> Parser b
 -- (<*) :: Applicative f => f a -> f b -> f a
 -- (<*) :: Parser a -> Parser b -> Parser a
--- guard :: Bool -> m ()
+-- guard :: MonadPlus m => Bool -> m ()
 -- guard :: Bool -> Parser ()
 
 -- runParser (guard True) ""

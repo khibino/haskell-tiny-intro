@@ -44,9 +44,10 @@ pairM pa pb = do
 -- make instances of weaker proposition type classes
 
 -- Functor
--- (<$>) :: (a -> b) -> (f a -> f b)
--- (<$>) :: (a -> b) -> (Parser a -> Parser b)
--- fmap :: Functor f => (a -> b) -> f a -> f b
+-- fmap  :: Functor f => (a -> b) -> f a -> f b
+--       :: Functor f => (a -> b) -> (f a -> f b)
+-- (<$>) :: Functor f => (a -> b) -> f a -> f b
+-- (<$>) :: (a -> b) -> Parser a -> Parser b
 -- liftM :: Monad m => (a -> b) -> m a -> m b
 
 instance Functor Parser where

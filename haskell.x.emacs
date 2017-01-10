@@ -4,6 +4,7 @@
 ;;;
 (set-default 'next-line-add-newlines t)
 (setq visible-bell t)
+(setq inhibit-startup-screen t)
 
 ;;; for color terminal
 (custom-set-variables '(frame-background-mode 'dark))

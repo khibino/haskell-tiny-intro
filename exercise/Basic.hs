@@ -8,8 +8,8 @@ import Data.Maybe (isJust, fromJust)
 -- Purely Functional Programming Language
 
 
--- 簡単な定義の例
--- simple definition examples
+-- 簡単な定義の例 - 関数、値 の定義
+-- simple definition examples - definitions of values and functions
 
 -- Int -> (Int -> (Int -> Int))
 foo :: Int -> Int -> Int -> Int     -- 型シグネチャ  -- type signature
@@ -20,6 +20,12 @@ bar b =
   if b
   then 1
   else 0
+
+one :: Integer
+one = 1
+
+bar2 :: Bool -> Int
+bar2 b = bar b + 2
 
 
 -- :type foo
@@ -168,17 +174,9 @@ data [a]
  -}
 
 -- :i :
+-- :t []
+-- :t (:)
 -- :t 'a' : "bc"
-
-
--- 値、関数 の定義
--- definitions of values and functions
-
-one :: Integer
-one = 1
-
-bar2 :: Bool -> Int
-bar2 b = bar b + 2
 
 
 -- パターンマッチ(パターン照合)
@@ -209,8 +207,8 @@ wrongBaz4 d m =
   if isJust m           --  m != null
   then d
   else fromJust m + 1   --  m + 1  -- error
-       -- not compile error
-       -- else clause is runtime error
+       -- このelse節はコンパイルエラーにならず、ランタイムエラーになる
+       -- This else clause is not compile error but runtime error
 
 
 baz2 :: a -> Maybe a -> a

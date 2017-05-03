@@ -1,5 +1,6 @@
 module Basic where
 
+import Data.Bool
 import Data.Char (digitToInt)
 import Data.Maybe (isJust, fromJust)
 
@@ -157,6 +158,16 @@ data Maybe a
 -- :i Maybe
 -- :t Just
 -- :t Just "Hello"
+
+{-
+data Either e a
+  = Left e
+  | Right a
+ -}
+
+-- :i Either
+-- :t Right
+-- :t Left
 
 {-
 data [] a
@@ -370,6 +381,72 @@ readHex' = undefined
 
 -- 畳み込み
 -- folding
+
+-- S型に対する畳み込み
+-- folding for type S
+runS :: (Char -> Int -> a) -> (String -> a) -> S -> a
+runS f g s = case s of
+  X c i -> f c i
+  Y str -> g str
+
+-- :t runS
+-- runS (\c i -> replicate i c) id exampleX0
+-- runS (\c i -> replicate i c) id exampleY0
+
+-- Bool型に対する畳み込み
+-- folding for type Bool
+-- GHC 8 以降なら bool という名前で定義されている
+-- pre-defined as `bool' in GHC 8 or newer
+bool' :: a -> a -> Bool -> a
+bool' t e b = if b then t else e
+
+-- :t bool'
+-- :t bool
+exampleBoolT = bool' "foo" "bar" True
+exampleBoolF = bool' "foo" "bar" False
+
+-- Maybe型に対する畳み込み
+
+-- :t maybe
+exampleMaybeJ :: Integer
+exampleMaybeJ = maybe 0 (\x -> 2 ^ x) (Just 10)
+exampleMaybeN :: Integer
+exampleMaybeN = maybe 0 (\x -> 2 ^ x) Nothing
+
+-- Either型に対する畳み込み
+-- :t either
+exampeEitherR :: String
+exampeEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Right 10)
+exampeEitherL :: String
+exampeEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Left "no result")
+
+-- List型 ( [] ) に対する畳み込み
+-- List型に対する畳み込みは 2通り考えられる
+
+-- :t foldr
+{-
+foldr f i xxs = case xxs of
+  x:xs  ->  f x (foldr f i xs)
+  []    ->  i
+ -}
+-- 余再帰
+exampleListLRN :: Integer
+exampleListLRN = foldr (+) 0 []
+exampleListLRC :: Integer
+exampleListLRC = foldr (+) 0 [1 .. 20]
+
+-- :t foldl
+{-
+foldl f i xxs = case xxs of
+  x:xs  ->  foldl f (f i x) xs
+  []    ->  i
+ -}
+-- 末尾再帰
+exampleListLLN :: Integer
+exampleListLLN = foldl (+) 0 []
+exampleListLLC :: Integer
+exampleListLLC = foldl (+) 0 [1 .. 20]
+
 
 factorial5 :: Integer -> Integer
 factorial5 n = foldl (*) 1 [n, n - 1 .. 1]

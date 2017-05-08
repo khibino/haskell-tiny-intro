@@ -422,8 +422,27 @@ exampeEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x ::
 exampeEitherL :: String
 exampeEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Left "no result")
 
+-- 次のデータ型に対する畳み込みの関数を書いてください。
+-- Write a folding function for the next data types.
+-- data P0 -- 定義済みの P0
+
+runP0 = undefined
+
+data Pair0 a b = Pair a b
+
+runPair = undefined
+
+data S2 a
+  = Foo Int
+  | Bar a Int
+  | Baz String
+
+runS2 = undefined
+
 -- List型 ( [] ) に対する畳み込み
+-- folding for List ( [] ) type
 -- List型に対する畳み込みは 2通り考えられる
+-- There is two way folding for list type.
 
 -- :t foldr
 {-

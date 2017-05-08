@@ -411,9 +411,9 @@ exampleBoolF = bool' "foo" "bar" False
 
 -- :t maybe
 exampleMaybeJ :: Integer
-exampleMaybeJ = maybe 0 (\x -> 2 ^ x) (Just 10)
+exampleMaybeJ = maybe 0 (\x -> 2 ^ (x :: Integer)) (Just 10)
 exampleMaybeN :: Integer
-exampleMaybeN = maybe 0 (\x -> 2 ^ x) Nothing
+exampleMaybeN = maybe 0 (\x -> 2 ^ (x :: Integer)) Nothing
 
 -- Either型に対する畳み込み
 -- :t either

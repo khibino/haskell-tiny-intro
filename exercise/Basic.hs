@@ -402,7 +402,9 @@ bool' t e b = if b then t else e
 
 -- :t bool'
 -- :t bool
+exampleBoolT :: String
 exampleBoolT = bool' "foo" "bar" True
+exampleBoolF :: String
 exampleBoolF = bool' "foo" "bar" False
 
 -- Maybe型に対する畳み込み

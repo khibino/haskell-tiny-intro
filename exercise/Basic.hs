@@ -221,7 +221,6 @@ wrongBaz4 d m =
        -- このelse節はコンパイルエラーにならず、ランタイムエラーになる
        -- This else clause is not compile error but runtime error
 
-
 baz2 :: a -> Maybe a -> a
 baz2 _ (Just x)  =  x     -- 使用しない引数を受けるのに (_) ワイルドカードパターンを使っている
                           -- using (_) wild-card pattern against not using arity
@@ -369,7 +368,6 @@ factorial4 = go 1
 --                       蓄積引数
 --                       accumulator arity
 
-
 -- :t digitToInt
 -- map digitToInt ['0' .. '9']
 -- map digitToInt ['a' .. 'f']
@@ -417,10 +415,10 @@ exampleMaybeN = maybe 0 (\x -> 2 ^ (x :: Integer)) Nothing
 
 -- Either型に対する畳み込み
 -- :t either
-exampeEitherR :: String
-exampeEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Right 10)
-exampeEitherL :: String
-exampeEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Left "no result")
+exampleEitherR :: String
+exampleEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Right 10)
+exampleEitherL :: String
+exampleEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Left "no result")
 
 -- 次のデータ型に対する畳み込みの関数を書いてください。
 -- Write a folding function for the next data types.
@@ -428,7 +426,7 @@ exampeEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x ::
 
 runP0 = undefined
 
-data Pair0 a b = Pair a b
+data Pair a b = Pair a b
 
 runPair = undefined
 

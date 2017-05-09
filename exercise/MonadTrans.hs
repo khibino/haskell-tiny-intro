@@ -1,5 +1,7 @@
 module MonadTrans where
 
+import Data.Time
+import Data.Time.Locale.Compat (defaultTimeLocale)
 import Data.Functor.Identity
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Writer
@@ -121,3 +123,11 @@ expr = undefined
 -- runParser expr "(1+2)*(3+4)+5"
 
 -- eval . fst <$> runParser expr "(1+2)*(3+4)+5"
+
+
+-- parseTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" "2017-05-09 12:34:56" :: Maybe LocalTime
+
+-- 時刻を解釈する parser を実装してください
+-- implement parser to parse timestamp string
+timestamp :: Parser LocalTime
+timestamp = undefined

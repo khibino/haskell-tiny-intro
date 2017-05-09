@@ -23,7 +23,7 @@ type Parser = Parser' String
 
 -- error message 付きの失敗
 -- failure with error message
-errorP :: String -> Parser a
+errorP :: String -> Parser' in' a
 errorP s = undefined
 
 -- 入力を一文字消費し、結果とする parser

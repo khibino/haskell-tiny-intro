@@ -3,6 +3,10 @@ module MonadTrans where
 import Data.Time
 import Data.Time.Locale.Compat (defaultTimeLocale)
 import Data.Functor.Identity
+import Control.Applicative
+import Control.Monad
+import Control.Monad.Trans.Class (lift)
+import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Writer
 import Control.Monad.Trans.State
@@ -23,6 +27,8 @@ class MonadTrans t where
 
 -- Monad (t m) の instance は MonadTrans とは別に定義する
  -}
+-- lift は何もしない
+--  lift . return === return
 
 -- 何もしない monad
 {-
@@ -43,6 +49,8 @@ instance Monad Identity where
 --               MaybeT m a      ===  m (Maybe a)
 --               ExceptT e m a   ===  m (Either e a)
 
+-- import Data.Monoid
+-- :i Monoid
 -- :i IdentityT
 -- :i ReaderT
 -- :i WriterT
@@ -50,9 +58,13 @@ instance Monad Identity where
 -- :i MaybeT
 -- :i ExceptT
 
+--               StateT s m a    ===  s -> m (a, s)
+--               String -> Maybe (a, String)
 
 type Parser = StateT String Maybe
 
+runParser :: Parser a -> String -> Maybe (a, String)
+runParser = runStateT
 
 -- MonadPlus と MonadTrans
 -- MonadPlus and MonadTrans
@@ -69,10 +81,14 @@ type Parser = StateT String Maybe
 
 
 -- エラーハンドリング
---                              MonadPlus (MaybeT m)
+--                              MonadPlus Maybe
 --  MonadPlus m             =>  MonadPlus (StateT s m)
 
 --                              MonadPlus (StateT String Maybe)
+
+-- :t get
+-- :t put
+-- get, put を使って以下を実装
 
 -- 入力を一文字消費し、結果とする parser
 -- parser which consume one char input and that char is parser's result
@@ -84,10 +100,10 @@ token = undefined
 eof :: Parser ()
 eof = undefined
 
-
 -- parseTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" "2017-05-09 12:34:56" :: Maybe LocalTime
 
 -- 時刻を解釈する parser を実装してください
 -- implement parser to parse timestamp string
+-- hint. 入力の残りを作り出すには?  splitAt
 timestamp :: Parser LocalTime
 timestamp = undefined

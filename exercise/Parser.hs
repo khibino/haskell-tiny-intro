@@ -75,13 +75,17 @@ eof = undefined
 -- Parser sequence
 
 -- 「a を結果とする parser」 と 「a を使って b を結果とする parser を作る関数」 を合成して、「b を結果とする parser」 を返す
+-- runParser を使う
 -- Parser a : parser's result is `a'
 -- a -> Parser b : function using `a' which result is parser which result is `b'
 -- combine above two and make parser which result is `b'
+-- using runParser
 combine :: Parser a -> (a -> Parser b) -> Parser b
 combine pa f = undefined
 
 -- runParser (token `combine` \c -> success c) "a"
+-- runParser (token `combine` \x -> token `combile` \y -> success [x, y]) "a"
+-- runParser (token `combine` \x -> token `combile` \y -> success [x, y]) "ab"
 
 -- combine を使って pair の parser を作る
 -- make pair parser using `combine'
@@ -104,7 +108,9 @@ satisfy p = undefined
 -- Parser error handling
 
 -- a を結果とする parser を 2つ受けとり、1つ目が失敗したら 2つ目を実行する parser を返す
+-- runParser を使う
 -- combine two parser. if first one is failed, run second parser.
+-- using runParser
 orElse :: Parser a -> Parser a -> Parser a
 orElse px py = undefined
 

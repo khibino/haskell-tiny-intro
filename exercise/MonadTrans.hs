@@ -7,6 +7,8 @@ import Control.Monad.Trans.State
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.Except
 
+import Calc (Expr (..), eval)
+
 -- Monad Transformer
 
 -- Monad m があったとき Monad (t m) となるような t
@@ -58,3 +60,64 @@ token = undefined
 -- success on end of input, otherwise failure
 eof :: Parser ()
 eof = undefined
+
+
+-- 内側の性質を引き継ぐ
+--   MonadPlus m             =>  MonadPlus (IdentityT m)
+--   MonadPlus m             =>  MonadPlus (ReaderT r m)
+--  (Monoid w, MonadPlus m)  =>  MonadPlus (WriterT w m)
+--   MonadPlus m             =>  MonadPlus (StateT s m)
+
+-- 代わりの結果
+--                               MonadPlus (MaybeT m)
+--   Monoid e                =>  MonadPlus (ExceptT e m)
+
+
+-- エラーハンドリング
+--                              MonadPlus (MaybeT m)
+--  MonadPlus m             =>  MonadPlus (StateT s m)
+
+--                              MonadPlus (StateT String Maybe)
+
+
+-- 以下の文法の Expr型の結果を持つ parser を実装してください
+-- Implement following syntax parser which result is Expr type.
+-- 演算子は右結合でよい
+-- right associative operator implementation may be more simple.
+
+--  expr :=
+--       | expr + expr
+--       | expr * expr
+--       | ( expr )
+--       | <decimal number>
+
+readNum :: String -> Expr
+readNum = undefined
+
+-- decimal number parser
+numExpr :: Parser Expr
+numExpr = undefined
+
+-- unit term parser
+unitExpr :: Parser Expr
+unitExpr = undefined
+
+-- multiply formula parser
+multExpr :: Parser Expr
+multExpr = undefined
+
+-- plus formula parser
+plusExpr :: Parser Expr
+plusExpr = undefined
+
+-- top-level parser
+expr :: Parser Expr
+expr = undefined
+
+-- runParser expr "1"
+-- runParser expr "(1)"
+-- runParser expr "1+2+3"
+-- runParser expr "2*3*4"
+-- runParser expr "(1+2)*(3+4)+5"
+
+-- eval . fst <$> runParser expr "(1+2)*(3+4)+5"

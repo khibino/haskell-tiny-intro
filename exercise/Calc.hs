@@ -1,4 +1,4 @@
-module Calc where
+module Calc (Expr (..), eval) where
 
 import Data.Char
 import Control.Applicative

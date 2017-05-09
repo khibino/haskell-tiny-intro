@@ -182,3 +182,11 @@ hexInt = undefined
 
 -- many :: Alternative f => f a -> f [a]
 -- some :: Alternative f => f a -> f [a]
+
+-- monad is monoidal
+-- join :: m (m a) -> m a
+-- m (m (m a))  --> m (m a)
+--
+-- join . return        ===  id  -- left id
+-- join . fmap return   ===  id  -- right id
+-- join  ===  fmap join          -- associativity

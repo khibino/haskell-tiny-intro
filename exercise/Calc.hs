@@ -24,6 +24,16 @@ data Expr
 --       | ( expr )
 --       | <decimal number>
 
+-- hint.
+-- plusExpr := plusExpr + multExpr |  -- 左再帰 は都合が悪い  -- left recursion is difficult
+--             multExpr
+--
+-- expr := plusExpr
+-- plusExpr := multExpr '+' plusExpr |
+--             multExpr
+-- multExpr := unitExpr '*' multExpr |
+--             unitExpr
+
 
 readNum :: String -> Expr
 readNum = undefined

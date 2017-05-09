@@ -69,11 +69,20 @@ instance Applicative Parser where
 -- (,) <$> (pa :: Parser a) :: Parser (b -> (a, b))
 -- (,) <$> pa <*> pb :: Parser (a, b)
 
+-- (,,) <$> pa <*> pb <*> pc :: Parser (a, b, c)
+-- (,,,) <$> pa <*> pb <*> pc <*> pd :: Parser (a, b, c, d)
+
+
 -- Applicative を使った pair の定義
 -- pair definition using Applicative
 pairA :: Parser a -> Parser b -> Parser (a, b)
 pairA pa pb = (,) <$> pa <*> pb
 
+swappedM :: Parser a -> Parser b -> Parser (a, b)
+swappedM pa pb = do
+  b <- pb
+  a <- pa
+  return $ (,) a b
 
 -- エラーハンドリングの抽象化
 -- error handling abstraction
@@ -82,6 +91,14 @@ pairA pa pb = (,) <$> pa <*> pb
 -- empty :: Parser a
 -- (<|>) :: Parser a -> Parser a -> Parser a
 -- (<|>) :: Alternative f => f a -> f a -> f a
+
+-- a <|> empty  ==  a
+-- empty <|> a  ==  a
+-- (a <|> b) <|> c == a <|> (b <|> c)
+
+-- a `mplus` mzero  ==  a
+-- mzero `mplus` a  ==  a
+-- (a `mplus` b) `mplus` c == a `mplus` (b `mplus` c)
 
 instance Alternative Parser where
   empty  =  failure
@@ -117,11 +134,20 @@ satisfy p = undefined
 char :: Char -> Parser Char
 char c = undefined
 
--- 16進数の文字かどうかを判定する
+-- runParser (char 'a') "b"
+-- runParser (char 'a') "a"
+
+-- 16進数の文字だったら成功し、その文字を返す
 -- hexadecimal character parser
 -- hint. satisfy
+--       '1' `elem` ['0' .. '9']
+--       'e' `elem` ['a' .. 'f']
 hex :: Parser Char
 hex = undefined
+
+-- runParser hex "1"
+-- runParser hex "f"
+-- runParser hex "x"
 
 -- parser a が失敗するまで繰り返し実行し、[a] を parser の結果とする
 -- repeat until run `parser a'. parser result is list

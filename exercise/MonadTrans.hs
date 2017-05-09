@@ -1,8 +1,11 @@
-module MonadTrans
-       ( Parser'
-       )where
+module MonadTrans where
 
+import Data.Functor.Identity
+import Control.Monad.Trans.Reader
+import Control.Monad.Trans.Writer
 import Control.Monad.Trans.State
+import Control.Monad.Trans.Maybe
+import Control.Monad.Trans.Except
 
 -- Monad Transformer
 
@@ -36,13 +39,22 @@ instance Monad Identity where
 --               MaybeT m a      ===  m (Maybe a)
 --               ExceptT e m a   ===  m (Either e a)
 
-type Parser' in' = StateT in' Maybe
+-- :i IdentityT
+-- :i ReaderT
+-- :i WriterT
+-- :i StateT
+-- :i MaybeT
+-- :i ExceptT
 
-type Parser = Parser' String
 
+type Parser = StateT String Maybe
 
+-- 入力を一文字消費し、結果とする parser
+-- parser which consume one char input and that char is parser's result
 token :: Parser Char
 token = undefined
 
+-- 入力の終わりなら成功し、そうでなければ失敗する
+-- success on end of input, otherwise failure
 eof :: Parser ()
 eof = undefined

@@ -1,6 +1,7 @@
 module MonoidError where
 
 import Data.Monoid
+import Control.Monad.Trans.Class (lift)
 import Control.Monad.Trans.State
 import Control.Monad.Trans.Except
 
@@ -17,13 +18,16 @@ import Calc (Expr (..), eval)
 type Parser' in' = StateT in' (Except (Last String))
 type Parser = Parser' String
 
+runParser :: Parser a -> String -> Except (Last String) (a, String)
+runParser = runStateT
 
 -- error message 付きの Parser を実装する
 -- implementing Parser with error message
 
 -- error message 付きの失敗
 -- failure with error message
-errorP :: String -> Parser' in' a
+-- hint. except, throwE
+errorP :: String -> Parser a
 errorP s = undefined
 
 -- 入力を一文字消費し、結果とする parser

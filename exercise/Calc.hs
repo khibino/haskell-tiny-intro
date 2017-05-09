@@ -53,9 +53,11 @@ expr = undefined
 -- runParser expr "1+2+3"
 -- runParser expr "2*3*4"
 -- runParser expr "(1+2)*(3+4)+5"
+-- runParser expr "2*3+4*5"
 
 -- evaluator
 eval :: Expr -> Int
 eval = undefined
 
 -- eval . fst <$> runParser expr "(1+2)*(3+4)+5"
+-- eval . fst <$> runParser expr "2*3+4*5"

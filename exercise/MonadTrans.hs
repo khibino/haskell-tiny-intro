@@ -53,18 +53,11 @@ instance Monad Identity where
 
 type Parser = StateT String Maybe
 
--- 入力を一文字消費し、結果とする parser
--- parser which consume one char input and that char is parser's result
-token :: Parser Char
-token = undefined
 
--- 入力の終わりなら成功し、そうでなければ失敗する
--- success on end of input, otherwise failure
-eof :: Parser ()
-eof = undefined
-
-
+-- MonadPlus と MonadTrans
+-- MonadPlus and MonadTrans
 -- 内側の性質を引き継ぐ
+-- inherit inner monad structure
 --   MonadPlus m             =>  MonadPlus (IdentityT m)
 --   MonadPlus m             =>  MonadPlus (ReaderT r m)
 --  (Monoid w, MonadPlus m)  =>  MonadPlus (WriterT w m)
@@ -81,48 +74,15 @@ eof = undefined
 
 --                              MonadPlus (StateT String Maybe)
 
+-- 入力を一文字消費し、結果とする parser
+-- parser which consume one char input and that char is parser's result
+token :: Parser Char
+token = undefined
 
--- 以下の文法の Expr型の結果を持つ parser を実装してください
--- Implement following syntax parser which result is Expr type.
--- 演算子は右結合でよい
--- right associative operator implementation may be more simple.
-
---  expr :=
---       | expr + expr
---       | expr * expr
---       | ( expr )
---       | <decimal number>
-
-readNum :: String -> Expr
-readNum = undefined
-
--- decimal number parser
-numExpr :: Parser Expr
-numExpr = undefined
-
--- unit term parser
-unitExpr :: Parser Expr
-unitExpr = undefined
-
--- multiply formula parser
-multExpr :: Parser Expr
-multExpr = undefined
-
--- plus formula parser
-plusExpr :: Parser Expr
-plusExpr = undefined
-
--- top-level parser
-expr :: Parser Expr
-expr = undefined
-
--- runParser expr "1"
--- runParser expr "(1)"
--- runParser expr "1+2+3"
--- runParser expr "2*3*4"
--- runParser expr "(1+2)*(3+4)+5"
-
--- eval . fst <$> runParser expr "(1+2)*(3+4)+5"
+-- 入力の終わりなら成功し、そうでなければ失敗する
+-- success on end of input, otherwise failure
+eof :: Parser ()
+eof = undefined
 
 
 -- parseTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" "2017-05-09 12:34:56" :: Maybe LocalTime

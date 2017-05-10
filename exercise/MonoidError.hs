@@ -1,9 +1,11 @@
 module MonoidError where
 
-import Data.Monoid
+import Control.Applicative
+import Control.Monad
 import Control.Monad.Trans.Class (lift)
 import Control.Monad.Trans.State
 import Control.Monad.Trans.Except
+import Data.Monoid
 
 
 -- :i Last

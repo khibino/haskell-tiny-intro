@@ -1,8 +1,13 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module ByteString where
 
+import Data.Char (digitToInt)
 import Data.ByteString.Lazy (ByteString)
-import qualified Data.ByteString.Lazy.Char8 as B8
+import qualified Data.ByteString.Lazy.Char8 as L8
 import Data.Monoid
+import Control.Applicative
+import Control.Monad
 import Control.Monad.Trans.Class (lift)
 import Control.Monad.Trans.State
 import Control.Monad.Trans.Except
@@ -13,15 +18,30 @@ import Calc (Expr (..), eval)
 
 type Parser = Parser' ByteString
 
-token :: Parser Char
-token = undefined
+runParser :: Parser a -> ByteString -> Except (Last String) (a, ByteString)
+runParser = runStateT
 
+token :: Parser Char
+token =  undefined
+
+-- runParser token "abc"
+-- runParser token ""
+
+-- hint. fromIntegral
 chunk :: Int -> Parser ByteString
-chunk = undefined
+chunk n = undefined
+
+-- runParser (chunk 4) "abc"
+-- runParser (chunk 4) "abcd"
 
 eof :: Parser ()
 eof = undefined
 
+-- runParser eof "abc"
+-- runParser eof ""
+
+satisfy :: (Char -> Bool) -> String -> Parser Char
+satisfy p em = undefined
 
 -- 以下の文法の Expr型の結果を持つ parser を実装してください
 -- Implement following syntax parser which result is Expr type.
@@ -33,6 +53,9 @@ eof = undefined
 --       | expr * expr
 --       | ( expr )
 --       | <decimal number>
+
+char :: Char -> Parser Char
+char c = undefined
 
 readNum :: String -> Expr
 readNum = undefined

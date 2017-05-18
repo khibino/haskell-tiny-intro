@@ -151,8 +151,8 @@ data Bool
 
 {-
 data Maybe a
-  = Just a
-  | Nothing
+  = Nothing
+  | Just a
  -}
 
 -- :i Maybe
@@ -258,6 +258,7 @@ fib 0 = 0
 fib 1 = undefined
 fib n = undefined
 
+-- map fib [0 .. 10]
 
 -- 型エイリアスの定義
 -- type alias definition
@@ -351,6 +352,7 @@ take' = undefined
 -- take' 2 [1,2,3]     ===  [1,2]
 -- take' (-1) [1,2]    ===  []
 -- take' 3 [1,2,3,4]   ===  [1,2,3]
+-- take' 3 [1,2]       ===  [1,2]
 
 -- 局所定義
 -- local scope definition

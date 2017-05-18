@@ -411,16 +411,34 @@ exampleBoolF = bool' "foo" "bar" False
 
 -- :t maybe
 exampleMaybeJ :: Integer
-exampleMaybeJ = maybe 0 (\x -> 2 ^ (x :: Integer)) (Just 10)
+exampleMaybeJ = maybe 0 (\x -> 2 ^ x) (Just 10 :: Maybe Integer)
+exampleMaybeJ' :: Integer
+exampleMaybeJ' = case Just 10 :: Maybe Integer of
+  Nothing  -> 0
+  Just x   -> 2 ^ x
+
 exampleMaybeN :: Integer
-exampleMaybeN = maybe 0 (\x -> 2 ^ (x :: Integer)) Nothing
+exampleMaybeN = maybe 0 (\x -> 2 ^ x) (Nothing :: Maybe Integer)
+exampleMaybeN' :: Integer
+exampleMaybeN' = case Nothing :: Maybe Integer of
+  Nothing  ->  0
+  Just x   ->  2 ^ x
 
 -- Either型に対する畳み込み
 -- :t either
 exampleEitherR :: String
-exampleEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Right 10)
+exampleEitherR = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show x) (Right 10 :: Either String Int)
+exampleEitherR' :: String
+exampleEitherR' = case Right 10 :: Either String Int of
+  Left e  -> "failed: " ++ e
+  Right x -> "result is " ++ show x
+
 exampleEitherL :: String
-exampleEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show (x :: Int)) (Left "no result")
+exampleEitherL = either (\e -> "failed: " ++ e) (\x -> "result is " ++ show x) (Left "no result" :: Either String Int)
+exampleEitherL' :: String
+exampleEitherL' = case Left "no result" :: Either String Int of
+  Left e  -> "failed: " ++ e
+  Right x -> "result is " ++ show x
 
 -- 次のデータ型に対する畳み込みの関数を書いてください。
 -- Write a folding function for the next data types.

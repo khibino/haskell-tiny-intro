@@ -87,6 +87,7 @@ data P2 a  =  P2 a String    deriving Show
 -- :i P2
 -- :t P2
 -- :t P2 'x'
+-- :t P2 foo
 
 -- パラメータを持った型を定義することができる。
 -- parameterized type definition

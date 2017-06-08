@@ -55,7 +55,7 @@ failure = undefined
 
 -- runParser failure "a"
 
--- 入力を一文字消費し、結果とする parser
+-- 入力を一文字消費し、消費した文字を結果とする parser
 -- parser which consume one char input and that char is parser's result
 token :: Parser Char
 token = undefined

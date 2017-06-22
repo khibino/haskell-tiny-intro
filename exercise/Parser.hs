@@ -84,8 +84,8 @@ combine :: Parser a -> (a -> Parser b) -> Parser b
 combine pa f = undefined
 
 -- runParser (token `combine` \c -> success c) "a"
--- runParser (token `combine` \x -> token `combile` \y -> success [x, y]) "a"
--- runParser (token `combine` \x -> token `combile` \y -> success [x, y]) "ab"
+-- runParser (token `combine` \x -> token `combine` \y -> success [x, y]) "a"
+-- runParser (token `combine` \x -> token `combine` \y -> success [x, y]) "ab"
 
 -- combine を使って pair の parser を作る
 -- make pair parser using `combine'

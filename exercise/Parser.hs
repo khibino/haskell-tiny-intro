@@ -89,7 +89,7 @@ combine pa f = undefined
 -- runParser (token `combine` \c -> success c) "a"
 -- runParser (token `combine` \_ -> token) "ab"
 -- runParser (token `combine` \x -> token `combine` \y -> success [x, y]) "a"
--- runParser (token `combine` \x -> token `combine` \y -> success [x, y]) "ab"
+-- runParser (token `combine` \x -> token `combine` \y -> success [x, y]) "abc"
 
 -- combine を使って pair の parser を作る
 -- make pair parser using `combine'

@@ -80,6 +80,9 @@ eof = undefined
 -- a -> Parser b : function using `a' which result is parser which result is `b'
 -- combine above two and make parser which result is `b'
 -- using runParser
+
+-- Parser a が失敗したときは結果の Parser b も失敗する
+-- Parser a が成功したときは結果の a を (a -> Parser b) に渡すことで Parser b を作って実行
 combine :: Parser a -> (a -> Parser b) -> Parser b
 combine pa f = undefined
 

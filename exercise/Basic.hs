@@ -12,8 +12,8 @@ import Data.Maybe (isJust, fromJust)
 -- 簡単な定義の例 - 関数、値 の定義
 -- simple definition examples - definitions of values and functions
 
--- Int -> (Int -> (Int -> Int))
-foo :: Int -> Int -> Int -> Int     -- 型シグネチャ  -- type signature
+--     Int -> (Int -> (Int -> Int))
+foo :: Int ->  Int ->  Int -> Int   -- 型シグネチャ  -- type signature
 foo x y z = x + y + z               -- 定義          -- definition body
 
 bar :: Bool -> Int
@@ -198,7 +198,14 @@ bar3 :: Bool -> Int
 bar3 True   =  1
 bar3 False  =  0
 
-baz :: a -> Maybe a -> a  -- 型変数入りの型シグネチャ  -- type signature using type variable
+bar3' :: Bool -> Int
+bar3' b = case b of
+  True  ->  1
+  False ->  0
+
+--     型変数入りの型シグネチャ
+--     type signature using type variable
+baz :: a -> Maybe a -> a
 baz d m = case m of
   Just x   -> x
   Nothing  -> d
@@ -221,6 +228,9 @@ wrongBaz4 d m =
   else fromJust m + 1   --  m + 1  -- error
        -- このelse節はコンパイルエラーにならず、ランタイムエラーになる
        -- This else clause is not compile error but runtime error
+
+       -- 場合を尽していない場合の警告を見ることができない
+       -- Can't find non-exhaustive
 
 baz2 :: a -> Maybe a -> a
 baz2 _ (Just x)  =  x     -- 使用しない引数を受けるのに (_) ワイルドカードパターンを使っている

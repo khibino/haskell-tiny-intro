@@ -242,6 +242,24 @@ baz2 d Nothing   =  d
 
 -- baz2 "Hello" (Just 1)  -- error
 
+xfoo :: a -> Maybe (Maybe (Int, a)) -> a
+xfoo d m = case m of
+  Just (Just (_, x)) ->  x
+  Just  Nothing      ->  d
+  Nothing            ->  d
+
+  -- ネストしていてもパターンマッチできる
+  -- nesting pattern matching
+
+-- xfoo "Hello" (Just (Just (10, "World")))
+
+xfoo2 :: Maybe (Maybe (Int, a)) -> Int
+xfoo2 m = case m of
+  Just _  ->  1
+  Nothing ->  0
+
+  -- 型を充足するように必要なところまでパターンマッチすればよい
+  -- may do pattern match as needed
 
 factorial :: Integer -> Integer
 factorial n0 = case n0 of

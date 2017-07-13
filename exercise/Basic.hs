@@ -348,6 +348,13 @@ plus = (+)
                              -- binary operator `$' is useful instead of parens
 -- :t ($)
 
+-- exp $ 2 + 3
+-- :info $
+-- :info +
+
+-- :t (.)
+-- (2^) . (* 3) . (+ 2) $ 3
+
 
 -- ガード
 -- Guard

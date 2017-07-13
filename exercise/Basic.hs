@@ -302,6 +302,7 @@ fib n = undefined
 -- type alias definition
 
 type MaybeI = Maybe Int
+type PResult a = Maybe (a, String)
 
 -- 新しい型名は右辺の型式と同じ型になる
 -- new named type is the same type of right type formula

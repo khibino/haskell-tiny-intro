@@ -265,6 +265,8 @@ factorial :: Integer -> Integer
 factorial n0 = case n0 of
   0 -> 1
   n -> n * factorial (n - 1)  -- 再帰  -- recursion
+  -- 通常のデータコンストラクタではないのでちょっと例が良くないけれど ...
+  -- Not good example because it is not normal data constructor ...
 
 -- factorial 10
 
@@ -280,6 +282,13 @@ sumInt xxs = case xxs of
 
 -- フィボナッチ数列の n 項目を返す関数を書いてください
 -- Write a function which result is nth result of Fibonacci number
+
+-- f(n+2) = f(n+1) + f(n)
+--      1 =     1  +  0
+--      2 =     1  +  1
+--      3 =     2  +  1
+--      5 =     3  +  2
+--      ...
 
 -- hint
 fib :: Integer -> Integer

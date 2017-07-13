@@ -111,7 +111,9 @@ satisfy p = undefined
 -- Parser のエラーハンドリング
 -- Parser error handling
 
--- a を結果とする parser を 2つ受けとり、1つ目が失敗したら 2つ目を実行する parser を返す
+-- a を結果とする parser を 2つ受けとり、
+-- 1つ目が成功したらその結果を、
+-- 1つ目が失敗したら 2つ目を実行する parser を返す
 -- runParser を使う
 -- combine two parser. if first one is failed, run second parser.
 -- using runParser

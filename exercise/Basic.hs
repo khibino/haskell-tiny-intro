@@ -106,10 +106,18 @@ data (,) a b  =  (,) a b
 -- (,) a b === (a, b)
 
 data (a, b)  =  (a, b)
- -}
 
 -- :i (,)
 -- :t (,)
+
+data () = ()  -- ユニット, unit
+
+属する値がただ一つ () しか無いような型 ()。
+Type () contains the only one value ().
+
+-- :i ()
+-- :t ()
+-}
 
 
 -- 直和型

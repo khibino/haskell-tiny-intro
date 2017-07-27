@@ -115,6 +115,9 @@ data () = ()  -- ユニット, unit
 属する値がただ一つ () しか無いような型 ()。
 Type () contains the only one value ().
 
+直積の単位元と考えることができる。
+assume unit of product type.
+
 -- :i ()
 -- :t ()
 -}

@@ -93,6 +93,8 @@ combine pa f = undefined
 
 -- combine を使って pair の parser を作る
 -- make pair parser using `combine'
+-- runParser を使わない
+-- Not using runParser
 pair :: Parser a -> Parser b -> Parser (a, b)
 pair pa pb = undefined
 
@@ -100,6 +102,8 @@ pair pa pb = undefined
 
 -- 一文字入力し、条件判定が真なら成功し入力した文字を結果とする parser
 -- input one char and success if predicate is true, otherwise failure
+-- runParser を使わない
+-- Not using runParser
 satisfy :: (Char -> Bool) -> Parser Char
 satisfy p = undefined
 

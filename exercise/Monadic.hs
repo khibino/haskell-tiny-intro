@@ -49,6 +49,9 @@ pairM pa pb = do
 -- (<$>) :: Functor f => (a -> b) -> f a -> f b
 -- (<$>) :: (a -> b) -> Parser a -> Parser b
 -- liftM :: Monad m => (a -> b) -> m a -> m b
+-- liftM f ma = do
+--   a <- ma
+--   return $ f a
 
 instance Functor Parser where
   fmap = liftM
@@ -59,6 +62,10 @@ instance Functor Parser where
 -- (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 -- (<*>) :: Parser (a -> b) -> Parser a -> Parser b
 -- ap :: Monad m => m (a -> b) -> m a -> m b
+-- ap mf ma = do
+--   f <- mf
+--   a <- ma
+--   return $ f a
 
 instance Applicative Parser where
   pure  = return

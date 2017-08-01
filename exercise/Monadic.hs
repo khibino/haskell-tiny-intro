@@ -120,8 +120,11 @@ instance MonadPlus Parser where
 -- (*>) :: Parser a -> Parser b -> Parser b
 -- (<*) :: Applicative f => f a -> f b -> f a
 -- (<*) :: Parser a -> Parser b -> Parser a
--- guard :: MonadPlus m => Bool -> m ()
 -- guard :: Bool -> Parser ()
+-- guard :: MonadPlus m => Bool -> m ()
+-- guard b = case b of
+--   False -> mzero
+--   True  -> return ()
 
 -- runParser (guard True) ""
 -- runParser (guard False) ""

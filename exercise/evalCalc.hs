@@ -13,5 +13,5 @@ main :: IO ()
 main = do
   undefined
   case undefined of
-    Nothing  ->  undefined
-    Just v   ->  undefined
+    Nothing      ->  undefined
+    Just (_, _)  ->  undefined

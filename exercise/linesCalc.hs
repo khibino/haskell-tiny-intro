@@ -42,5 +42,5 @@ main = do
 -- 解釈が失敗した場合には Error と出力する
 parseAndPrint :: String -> IO ()
 parseAndPrint s = case undefined of
-  Nothing -> undefined
-  Just e  -> undefined
+  Nothing      -> undefined
+  Just (_, _)  -> undefined

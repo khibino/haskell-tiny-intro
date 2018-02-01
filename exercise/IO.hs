@@ -39,6 +39,8 @@ module IO where
 --
 
 -- IO の結果が遅延する特別な IO
+-- 結果を利用しないと IO が実行されないという特別な振舞いがあり、
+-- 注意して使う必要があるが、便利
 
 -- getContents :: IO String
 

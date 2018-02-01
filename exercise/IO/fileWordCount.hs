@@ -19,4 +19,5 @@ main = do
   args <- getArgs
   case args of
     []    ->  undefined
-    x:xs  ->  undefined
+    x:xs ->  do
+      undefined

@@ -125,6 +125,6 @@ orElse :: Parser a -> Parser a -> Parser a
 orElse px py = undefined
 
 -- runParser (satisfy (`elem` ['0' .. '9']) `orElse` token) "a"
--- runParser (satisfy (`elem` ['0' .. '4']) `orElse` satisfy (`elem` ['5' .. '9'])) "0"
--- runParser (satisfy (`elem` ['0' .. '4']) `orElse` satisfy (`elem` ['5' .. '9'])) "5"
--- runParser (satisfy (`elem` ['0' .. '4']) `orElse` satisfy (`elem` ['5' .. '9'])) "x"
+-- runParser (satisfy (== 'a') `orElse` satisfy (`elem` ['0' .. '9'])) "123"
+-- runParser (satisfy (== 'a') `orElse` satisfy (`elem` ['0' .. '9'])) "abc"
+-- runParser (satisfy (== 'a') `orElse` satisfy (`elem` ['0' .. '9'])) "bcd"

@@ -304,8 +304,8 @@ sumInt xxs = case xxs of
 -- hint
 fib :: Integer -> Integer
 fib 0 = 0
-fib 1 = undefined
-fib n = undefined
+fib 1 = 1
+fib n = fib (n - 1) + fib (n - 2)
 
 -- map fib [0 .. 10]
 
@@ -402,7 +402,11 @@ factorial3 n =  case n of
 -- リストの先頭から最大 n 個を取り出す関数を書いてください
 -- Write a function which takes most n elements from list head.
 take' :: Int -> [a] -> [a]
-take' = undefined
+take' n xxs
+  | n <= 0    = []
+  | otherwise = case xxs of
+      []   ->   []
+      x:xs ->   x : take' (n - 1) xs
 
 -- take' 2 []          ===  []
 -- take' 0 [1,2,3]     ===  []
@@ -434,7 +438,10 @@ factorial4 = go 1
 -- 16進数文字列を数値に直す関数を書いてください
 -- Write a function which convert hexadecimal string into integer
 readHex' :: String -> Int
-readHex' = undefined
+readHex' = go 0
+  where
+    go a  []    = a
+    go a (c:cs) = go (a * 16 + digitToInt c) cs
 
 -- 畳み込み
 -- folding
@@ -502,19 +509,24 @@ exampleEitherL' = case Left "no result" :: Either String Int of
 
 -- data P0 -- 定義済みの P0
 
-runP0 :: (Int -> String -> r) -> P0 -> r
-runP0 = undefined
+runP0 :: (Int -> String -> a) -> P0 -> a
+runP0 f (P0 i s) = f i s
 
 data Pair a b = Pair a b
 
-runPair = undefined
+runPair :: (a -> b -> c) -> Pair a b -> c
+runPair f (Pair x y) = f x y
 
 data S2 a
   = Foo Int
   | Bar a Int
   | Baz String
 
-runS2 = undefined
+runS2 :: (Int -> b) -> (a -> Int -> b) -> (String -> b) -> S2 a -> b
+runS2 f g h s2 = case s2 of
+  Foo x   -> f x
+  Bar x y -> g x y
+  Baz x   -> h x
 
 -- List型 ( [] ) に対する畳み込み
 -- folding for List ( [] ) type
@@ -553,4 +565,4 @@ factorial5 n = foldl (*) 1 [n, n - 1 .. 1]
 -- Write folding version of readHex'
 -- hint. factorial5 n = foldl (\a n -> n * a) 1 [n, n - 1 .. 1]
 readHex :: String -> Int
-readHex = undefined
+readHex = foldl (\a c -> a * 16 + digitToInt c) 0

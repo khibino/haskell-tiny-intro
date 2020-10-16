@@ -499,8 +499,10 @@ exampleEitherL' = case Left "no result" :: Either String Int of
 
 -- 次のデータ型に対する畳み込みの関数を書いてください。
 -- Write a folding function for the next data types.
+
 -- data P0 -- 定義済みの P0
 
+runP0 :: (Int -> String -> r) -> P0 -> r
 runP0 = undefined
 
 data Pair a b = Pair a b

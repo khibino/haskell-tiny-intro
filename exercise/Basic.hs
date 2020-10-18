@@ -436,6 +436,9 @@ factorial4 = go 1
 readHex' :: String -> Int
 readHex' = undefined
 
+-- readHex' "1f"  === 31
+-- readHex' "eff" === 3839
+
 -- 畳み込み
 -- folding
 
@@ -554,3 +557,6 @@ factorial5 n = foldl (*) 1 [n, n - 1 .. 1]
 -- hint. factorial5 n = foldl (\a n -> n * a) 1 [n, n - 1 .. 1]
 readHex :: String -> Int
 readHex = undefined
+
+-- readHex "1f"  === 31
+-- readHex "eff" === 3839

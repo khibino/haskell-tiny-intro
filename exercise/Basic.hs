@@ -443,6 +443,9 @@ readHex' = go 0
     go a  []    = a
     go a (c:cs) = go (a * 16 + digitToInt c) cs
 
+-- readHex' "1f"  === 31
+-- readHex' "eff" === 3839
+
 -- 畳み込み
 -- folding
 
@@ -566,3 +569,6 @@ factorial5 n = foldl (*) 1 [n, n - 1 .. 1]
 -- hint. factorial5 n = foldl (\a n -> n * a) 1 [n, n - 1 .. 1]
 readHex :: String -> Int
 readHex = foldl (\a c -> a * 16 + digitToInt c) 0
+
+-- readHex "1f"  === 31
+-- readHex "eff" === 3839

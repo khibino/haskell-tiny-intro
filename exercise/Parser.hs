@@ -38,12 +38,12 @@ newtype Parser a =
 -- success の簡単版
 -- easier version of success
 _success :: a -> (String -> Maybe (a, String))
-_success x = undefined
+_success x = \s -> Just (x, s)
 
 -- 入力を消費せずに、必ず成功し、指定された値を結果とする parser
 -- not consume input, always success and return result which is specified
 success :: a -> Parser a
-success x = undefined
+success x = Parser $ \s -> Just (x, s)
 
 -- runParser (success 1) ""
 -- runParser (success 0) "a"
@@ -51,14 +51,16 @@ success x = undefined
 -- 必ず失敗する parser
 -- always fail parser
 failure :: Parser a
-failure = undefined
+failure = Parser $ \_ -> Nothing
 
 -- runParser failure "a"
 
 -- 入力を一文字消費し、消費した文字を結果とする parser
 -- parser which consume one char input and that char is parser's result
 token :: Parser Char
-token = undefined
+token = Parser $ \ccs -> case ccs of
+  []   -> Nothing
+  c:cs -> Just (c, cs)
 
 -- runParser token "abc"
 -- runParser token ""
@@ -66,7 +68,9 @@ token = undefined
 -- 入力の終わりなら成功し、そうでなければ失敗する
 -- success on end of input, otherwise failure
 eof :: Parser ()
-eof = undefined
+eof = Parser $ \ccs -> case ccs of
+  []  -> Just ((), [])
+  _:_ -> Nothing
 
 -- runParser eof ""
 -- runParser eof "a"
@@ -84,7 +88,9 @@ eof = undefined
 -- Parser a が失敗したときは結果の Parser b も失敗する
 -- Parser a が成功したときは結果の a を (a -> Parser b) に渡すことで Parser b を作って実行
 combine :: Parser a -> (a -> Parser b) -> Parser b
-combine pa f = undefined
+combine pa f = Parser $ \s -> case runParser pa s of
+  Nothing      -> Nothing
+  Just (x, sa) -> runParser (f x) sa
 
 -- runParser (token `combine` \c -> success c) "a"
 -- runParser (token `combine` \_ -> token) "ab"
@@ -96,7 +102,7 @@ combine pa f = undefined
 -- runParser を使わない
 -- Not using runParser
 pair :: Parser a -> Parser b -> Parser (a, b)
-pair pa pb = undefined
+pair pa pb = pa `combine` \x -> pb `combine` \y -> success (x, y)
 
 -- runParser (pair token token) "abcd"
 
@@ -105,7 +111,7 @@ pair pa pb = undefined
 -- runParser を使わない
 -- Not using runParser
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy p = undefined
+satisfy p = token `combine` \c -> if p c then success c else failure
 
 -- '1' `elem` ['0' .. '9']
 -- runParser (satisfy (`elem` ['0' .. '9'])) "a"
@@ -122,7 +128,9 @@ satisfy p = undefined
 -- combine two parser. if first one is failed, run second parser.
 -- using runParser
 orElse :: Parser a -> Parser a -> Parser a
-orElse px py = undefined
+orElse px py = Parser $ \s -> case runParser px s of
+  Nothing -> runParser py s
+  Just p  -> Just p
 
 -- runParser (satisfy (`elem` ['0' .. '9']) `orElse` token) "a"
 -- runParser (satisfy (== 'a') `orElse` satisfy (`elem` ['0' .. '9'])) "123"

@@ -136,13 +136,16 @@ instance MonadPlus Parser where
 -- satisfy 再び。 guard を使って実装してみましょう。
 -- satisfy again. Please use guard function.
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy p = undefined
+satisfy p = do
+  c <- token
+  guard $ p c
+  return c
 
 -- 与えられた文字を入力したら成功し、その文字を返す
 -- specified character input succeed parsing and that character is result.
 -- hint. satisfy
 char :: Char -> Parser Char
-char c = undefined
+char c = satisfy (== c)
 
 -- runParser (char 'a') "b"
 -- runParser (char 'a') "a"
@@ -153,7 +156,10 @@ char c = undefined
 --       '1' `elem` ['0' .. '9']
 --       'e' `elem` ['a' .. 'f']
 hex :: Parser Char
-hex = undefined
+hex =
+  satisfy (`elem` ['0' .. '9']) <|>
+  satisfy (`elem` ['a' .. 'f']) <|>
+  satisfy (`elem` ['A' .. 'F'])
 
 -- runParser hex "1"
 -- runParser hex "f"
@@ -163,7 +169,12 @@ hex = undefined
 -- repeat until run `parser a'. parser result is list
 -- hint. -- 次の repeat1 との関係は? -- may be related to next problem repeat1
 repeat0 :: Parser a -> Parser [a]
-repeat0 pa = undefined
+repeat0 pa = repeat1 pa <|> return []
+{-
+repeat0 pa =
+  (:) <$> pa <*> repeat0 pa <|>
+  return []
+ -}
 
 -- runParser (repeat0 hex) ""
 -- runParser (repeat0 hex) "a1"
@@ -171,7 +182,7 @@ repeat0 pa = undefined
 -- repeat0 とは違い、一つ以上の結果を成功とする
 -- one or more length result only succeeds, different from repeat0
 repeat1 :: Parser a -> Parser [a]
-repeat1 pa = undefined
+repeat1 pa = (:) <$> pa <*> repeat0 pa
 
 -- runParser (repeat1 hex) ""
 -- runParser (repeat1 hex) "a1"
@@ -179,7 +190,7 @@ repeat1 pa = undefined
 -- 0x で始まる16進数を読む parser, 0 桁はエラー
 -- parser of hexadecimal integer begin with `0x', 0 digit number is error
 hexInt :: Parser Int
-hexInt = undefined
+hexInt = char '0' *> char 'x' *> (readHex <$> repeat1 hex)
 
 -- runParser hexInt "0x10A"
 

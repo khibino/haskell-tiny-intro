@@ -36,27 +36,49 @@ data Expr
 
 
 readNum :: String -> Expr
-readNum = undefined
+readNum = Num . foldl (\a c -> a * 10 + digitToInt c) 0
 
 -- decimal number parser
 numExpr :: Parser Expr
-numExpr = undefined
+numExpr = readNum <$> some (satisfy (`elem` ['0' .. '9']))
 
 -- unit term parser
 unitExpr :: Parser Expr
-unitExpr = undefined
+unitExpr =
+  char '(' *> plusExpr <* char ')' <|>
+  numExpr
 
 -- multiply formula parser
 multExpr :: Parser Expr
-multExpr = undefined
+multExpr = do
+  -- parse unitExpr only once for `unitExpr '*' multExpr | unitExpr`
+  u <- unitExpr
+  (pure (Mult u) <* char '*' <*> multExpr <|>
+   pure u)
+
+{- naive implementation
+multExpr =
+  Mult <$> unitExpr <* char '*' <*> multExpr <|>
+  unitExpr
+ -}
 
 -- plus formula parser
 plusExpr :: Parser Expr
-plusExpr = undefined
+plusExpr = do
+  -- parse multExpr only once for `unitExpr '*' multExpr | unitExpr`
+  m <- multExpr
+  (pure (Plus m) <* char '+' <*> plusExpr <|>
+   pure m)
+
+{- naive implementation
+plusExpr =
+  Plus <$> multExpr <* char '+' <*> plusExpr <|>
+  multExpr
+-}
 
 -- top-level parser
 expr :: Parser Expr
-expr = undefined
+expr = plusExpr <* eof {- add eof to parse whole input -}
 
 -- runParser expr "1"
 -- runParser expr "(1)"
@@ -67,7 +89,10 @@ expr = undefined
 
 -- evaluator
 eval :: Expr -> Int
-eval = undefined
+eval = f  where
+  f (Num n) = n
+  f (Plus x y) = eval x + eval y
+  f (Mult x y) = eval x * eval y
 
 -- eval . fst <$> runParser expr "(1+2)*(3+4)+5"
 -- eval . fst <$> runParser expr "2*3+4*5"

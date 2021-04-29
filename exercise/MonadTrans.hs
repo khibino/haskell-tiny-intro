@@ -1,5 +1,6 @@
 module MonadTrans where
 
+import Data.Char (digitToInt)
 import Data.Time
 import Data.Time.Locale.Compat (defaultTimeLocale)
 import Data.Functor.Identity
@@ -93,12 +94,20 @@ runParser = runStateT
 -- 入力を一文字消費し、結果とする parser
 -- parser which consume one char input and that char is parser's result
 token :: Parser Char
-token = undefined
+token = do
+  s <- get
+  case s of
+    []   ->  empty
+    c:cs ->  put cs *> pure c
 
 -- 入力の終わりなら成功し、そうでなければ失敗する
 -- success on end of input, otherwise failure
 eof :: Parser ()
-eof = undefined
+eof = do
+  s <- get
+  case s of
+    []   ->  pure ()
+    _:_  ->  empty
 
 -- parseTime defaultTimeLocale "%Y-%m-%d %H:%M:%S" "2017-05-09 12:34:56" :: Maybe LocalTime
 
@@ -106,4 +115,27 @@ eof = undefined
 -- implement parser to parse timestamp string
 -- hint. 入力の残りを作り出すには?  splitAt
 timestamp :: Parser LocalTime
-timestamp = undefined
+timestamp =
+    LocalTime <$> day <* char ' ' <*> time
+  where
+    day = fromGregorian
+          <$> (read <$> digitN 4) <* char '-'
+          <*> (read <$> digitN 2) <* char '-'
+          <*> (read <$> digitN 2)
+
+    time = TimeOfDay
+           <$> (read <$> digitN 2) <* char ':'
+           <*> (read <$> digitN 2) <* char ':'
+           <*> (read <$> digitN 2)
+
+    digitN n = replicateM n digit
+
+    satisfy :: (Char -> Bool) -> Parser Char
+    satisfy p = do
+      c <- token
+      guard $ p c
+      return c
+    digit :: Parser Char
+    digit = satisfy (`elem` ['0' .. '9'])
+    char :: Char -> Parser Char
+    char c = satisfy (== c)

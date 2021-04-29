@@ -1,5 +1,5 @@
 
-Haskell Tiny Introduction
+Haskell Tiny Introduction / Exercises
 ===
 
 この順に学ぶ

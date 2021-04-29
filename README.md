@@ -2,4 +2,5 @@
 Haskell Tiny Introduction
 ===
 
-[exercise](./exercise/)
+- [exercise index](./exercise/index.md)
+- [exercise files](./exercise/)

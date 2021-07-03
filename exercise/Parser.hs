@@ -28,8 +28,8 @@ newtype Parser a =
 -- :t Parser
 -- :t runParser
 
--- Parser と runParser は同型になっている
--- Parser and runParser is isomorphic.
+-- Parser と runParser は同型射になっている
+-- Parser and runParser are isomorphism.
 
 
 -- 以下の関数の定義を完成させてください
